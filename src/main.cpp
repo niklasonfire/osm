@@ -29,7 +29,7 @@
 #include "source/union.h"
 #include "source/standardline.h"
 #include "source/sourcemodel.h"
-#include "source/sourcelist.h"
+#include "sourcelist.h"
 #include "source/group.h"
 #include "chart/variablechart.h"
 #include "source/measurement.h"
