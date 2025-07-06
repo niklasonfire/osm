@@ -19,30 +19,24 @@ jobs:
     # Eine Sequenz von Schritten, die den Job ausmachen
     steps:
       # Schritt 1: Das Repository auschecken
-      # Lädt deinen Code auf den Runner herunter
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Schritt 2: Abhängigkeiten installieren
-      # Führt die Befehle aus, die wir zuvor identifiziert haben
+      # Schritt 2: Abhängigkeiten installieren (KORRIGIERT)
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y qtbase5-dev qt5-qmake libasound2-dev
+          sudo apt-get install -y qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qt5-qmake libasound2-dev
 
       # Schritt 3: Die Software bauen
-      # Führt die eigentlichen Kompilierungs-Schritte aus
       - name: Build the application
         run: |
           qmake
           make
 
       # Schritt 4: Das gebaute Artefakt hochladen
-      # Speichert die kompilierte Datei, damit du sie herunterladen kannst
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          # Name des Artefakts, das hochgeladen wird
           name: osm-binary
-          # Der Pfad zur Datei, die du speichern möchtest (der Name der ausführbaren Datei ist 'osm')
           path: osm
