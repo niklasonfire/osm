@@ -1,0 +1,48 @@
+# Name des Workflows, der in der GitHub Actions-Oberfläche angezeigt wird
+name: Build OpenSoundMeter
+
+# Legt fest, wann dieser Workflow ausgeführt wird
+on:
+  # Bei jedem Push auf den 'main' oder 'master' Branch
+  push:
+    branches: [ "main", "master" ]
+  # Ermöglicht das manuelle Starten des Workflows über die GitHub-UI
+  workflow_dispatch:
+
+# Definiert die auszuführenden Jobs
+jobs:
+  # Ein Job mit dem Namen 'build'
+  build:
+    # Der Typ des Runners, auf dem der Job laufen soll
+    runs-on: ubuntu-22.04
+
+    # Eine Sequenz von Schritten, die den Job ausmachen
+    steps:
+      # Schritt 1: Das Repository auschecken
+      # Lädt deinen Code auf den Runner herunter
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Schritt 2: Abhängigkeiten installieren
+      # Führt die Befehle aus, die wir zuvor identifiziert haben
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qtbase5-dev qt5-qmake libasound2-dev
+
+      # Schritt 3: Die Software bauen
+      # Führt die eigentlichen Kompilierungs-Schritte aus
+      - name: Build the application
+        run: |
+          qmake
+          make
+
+      # Schritt 4: Das gebaute Artefakt hochladen
+      # Speichert die kompilierte Datei, damit du sie herunterladen kannst
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # Name des Artefakts, das hochgeladen wird
+          name: osm-binary
+          # Der Pfad zur Datei, die du speichern möchtest (der Name der ausführbaren Datei ist 'osm')
+          path: osm
