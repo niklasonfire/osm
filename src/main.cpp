@@ -28,7 +28,7 @@
 #include "targettrace.h"
 #include "source/union.h"
 #include "source/standardline.h"
-#include "source/sourcemodel.h"
+#include "sourcemodel.h"
 #include "sourcelist.h"
 #include "source/group.h"
 #include "chart/variablechart.h"
